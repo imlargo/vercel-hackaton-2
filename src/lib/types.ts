@@ -1,1 +1,9 @@
-// place files you want to import through the `$lib` alias in this folder.
+export interface Carta {
+    pregunta: string;
+    respuesta: string;
+}
+
+export interface Mazo {
+    nombre: string;
+    cartas: Carta[];
+}

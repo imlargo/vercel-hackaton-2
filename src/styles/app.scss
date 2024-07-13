@@ -12,4 +12,15 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
 	font-optical-sizing: auto;
+	
+	background-color: #2a2c39;
+	color: #fff;
+}
+
+.page-container {
+	@apply mx-auto w-full md:max-w-screen-sm lg:max-w-screen-xl px-5;
+}
+
+textarea {
+	field-sizing: content!important;
 }
