@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import type { Mazo } from '$lib/types';
+	import { storeMazo } from '$src/lib/stores/storeMazo.svelte';
+	import { calificacion } from '$src/lib/utils/enums';
 
 	type Props = {
 		index: number;
@@ -12,16 +14,22 @@
 	const { index, mazo, pregunta, respuesta }: Props = $props();
 
 	function handleClick(e: MouseEvent) {
-		const target = e.target;
+		const element = e.target as HTMLButtonElement;
+		const tipo = element.dataset.tipo;
+		console.log(tipo);
+
+		storeMazo.next();
+	}
+
+	function rotateAction(element: HTMLElement) {
+		element.addEventListener('click', () => {
+			element.classList.toggle('isFliped');
+		});
 	}
 </script>
 
-<div
-	class="flash-card snap-center"
-	in:fly={{ x: 30, duration: 600 }}
-	out:fly={{ x: -30, duration: 600 }}
->
-	<div class="flash-card-inner">
+<div class="flash-card snap-center" in:fade>
+	<div use:rotateAction class="flash-card-inner isFliped">
 		<div class="flash-card-face flash-card-front">
 			<div class="flex justify-between items-center">
 				<span class="text-white/75">{mazo.nombre}</span>
@@ -49,16 +57,17 @@
 				<button
 					onclick={handleClick}
 					class="px-3 py-1.5 text-white font-medium text-center rounded-md bg-pink-400/90"
-					>Mal</button
+					data-tipo={calificacion.BAD}>Mal</button
 				>
 				<button
 					onclick={handleClick}
 					class="px-3 py-1.5 text-white font-medium text-center rounded-md bg-yellow-400/90"
-					>Regular</button
+					data-tipo={calificacion.OK}>Regular</button
 				>
 				<button
 					onclick={handleClick}
-					class="px-3 py-1.5 text-white font-medium text-center rounded bg-lime-400/90">Bien</button
+					class="px-3 py-1.5 text-white font-medium text-center rounded bg-lime-400/90"
+					data-tipo={calificacion.GOOD}>Bien</button
 				>
 			</div>
 		</div>
@@ -68,14 +77,13 @@
 <style lang="scss">
 	.flash-card {
 		aspect-ratio: 9/12;
-
 		width: auto;
 		height: 30rem;
 		perspective: 1000px;
+	}
 
-		&:hover .flash-card-inner {
-			transform: rotateY(-180deg);
-		}
+	.flash-card-inner.isFliped {
+		transform: rotateY(180deg);
 	}
 
 	.flash-card-face {
@@ -88,20 +96,20 @@
 		height: 100%;
 		position: relative;
 		transform-style: preserve-3d;
-		transition: transform 700ms;
+		transition: transform 0.5s;
 	}
 
 	.flash-card-front {
 		@apply shadow-lg shadow-purple-400/50;
 		background-color: #ad6aec;
 		color: #fff;
-		transform: rotateY(0deg);
+		transform: rotateY(-180deg);
 	}
 
 	.flash-card-back {
 		@apply shadow-lg shadow-violet-400/50;
 		background-color: #906eee;
 		color: #fff;
-		transform: rotateY(-180deg);
+		transform: rotateY(0deg);
 	}
 </style>

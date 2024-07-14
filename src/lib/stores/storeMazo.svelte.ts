@@ -1,35 +1,33 @@
-import type { Mazo } from "$lib/types";
+import type { Mazo } from '$lib/types';
 
 class StoreMazo {
-    mazo: Mazo | null = $state(null)
-    index = $state(0);
+	mazo: Mazo | null = $state(null);
+	index = $state(0);
 
-    prev() {
+	prev() {
+		if (this.index === 0) {
+			return;
+		}
 
-        if (this.index === 0) {
-            return;
-        }
+		this.index -= 1;
+	}
 
-        this.index -= 1;
-    }
+	next() {
+		if (this.mazo === null) {
+			return;
+		}
 
-    next() {
+		if (this.index === this.mazo.cartas.length - 1) {
+			return;
+		}
 
-        if (this.mazo === null) {
-            return;
-        }
+		this.index += 1;
+	}
 
-        if (this.index === this.mazo.cartas.length - 1) {
-            return;
-        }
-
-        this.index += 1;
-    }
-
-    start(mazo: Mazo) {
-        this.mazo = mazo;
-        this.index = 0;
-    }
+	start(mazo: Mazo) {
+		this.mazo = mazo;
+		this.index = 0;
+	}
 }
 
 export const storeMazo = new StoreMazo();

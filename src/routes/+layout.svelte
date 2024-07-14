@@ -4,7 +4,6 @@
 	import Footer from '$lib/components/UI/Footer.svelte';
 </script>
 
-
 <div class="page-container">
 	<Nav />
 </div>
