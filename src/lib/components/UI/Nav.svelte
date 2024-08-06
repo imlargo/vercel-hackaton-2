@@ -1,8 +1,8 @@
 <nav class="flex py-5 justify-between items-center">
 	<div class="flex basis-1/3 align-center">
 		<a class="text-2xl select-none" href="/">
-			<i class="bi bi-pen"></i>
-			<span>imlargo</span>
+			<i class="bi bi-journals"></i>
+			<span>FlashStudy</span>
 		</a>
 	</div>
 
